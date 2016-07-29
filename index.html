@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HTML Editor</title>
+  <meta charset="UTF-8">
+  <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Bevan'>
+  <style class="default">
+    style.default,
+    script.default {
+      display: none;
+    }
+    
+    style,
+    script {
+      display: block;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      font-family: monospace; /*monospace font*/
+      white-space: pre-wrap; /*behave like <pre>*/
+      word-wrap: break-word;
+      background-color: #ffc9a5;
+      border-top: 1px solid #93A1A1;
+      outline: none;
+    }
+    
+    script {
+      margin-bottom: 40px;
+    }
+    
+    #content_edit {
+      display: block;
+      outline: none;
+    }
+    
+    .label {
+      font-size: 12px;
+      font-weight: bold;
+      color: #666699;
+      text-transform: uppercase;
+      background-color: white;
+    }
+    
+    h1 {
+      font-family: 'Bevan', cursive;
+      text-shadow: 0px 1px 0px #378ab4, 1px 0 0px #5dabcd, 
+      			   1px 2px 1px #378ab4, 2px 1px 1px #5dabcd, 
+      			   2px 3px 2px #378ab4, 3px 2px 2px #5dabcd, 
+      			   3px 4px 2px #378ab4, 4px 3px 3px #5dabcd, 
+      			   4px 5px 3px #378ab4, 5px 4px 2px #5dabcd, 
+      			   5px 6px 2px #378ab4, 6px 5px 2px #5dabcd, 
+      			   6px 7px 1px #378ab4, 7px 6px 1px #5dabcd, 
+      			   7px 8px 0px #378ab4, 8px 7px 0px #5dabcd;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="content_edit" contenteditable>
+    <h1 contenteditable>HTML Editor</h1>
+    <h2 contenteditable>This whole page is editable and created with HTML, CSS, & JavaScript.</h2>
+    <h3 contenteditable>Play around with the content and styles to view the live changes</h3>
+  </div>
+  <div class="label">CSS</div>
+  <style id="css" contenteditable>
+    html {
+      margin: 50px;
+      font-family: Helvetica, Arial;
+      font-size: 16px;
+    }
+    
+    body {
+      background: #ffba8c;
+      color: #4c8a8b;
+    }
+    
+    h1 {
+      font-size: 3em;
+      color: #ffffff;
+    }
+    
+    h2 {
+      font-size: 1.5em;
+      color: #36798c;
+    }
+    
+    h3 {
+      font-size: 1em;
+      color: #428c36;
+    }
+    
+    p {
+      font-size: 1em;
+      color: #8c364a;
+      font-style: italic;
+    }
+  </style>
+  <div class="label">JavaScript</div>
+  <script id="js" contenteditable>
+    function createParagraph(text) {
+      var p = document.createElement('p');
+      p.innerHTML = text;
+      p.setAttribute('id', 'para', 'contenteditable', 'true');
+      var content = document.getElementById('content_edit');
+      content.appendChild(p);
+    }
+    createParagraph("This is the paragraph just created.");
+  </script>
+
+  <script class="default">
+    var countDown;
+    var js = document.getElementById('js');
+    var delay = 3000; //3 seconds
+
+    js.onkeyup = function(event) {
+      if (typeof countDown != "undefined") {
+        clearTimeout(countDown); //reset timer if user updates
+        countDown = 0;
+      }
+      countDown = setTimeout(updateCode, delay); //wait 3 seconds before updating new code
+    }
+
+    function updateCode() {
+      var script = document.createElement("script"); //create new element
+      script.innerHTML = js.innerHTML;
+      js.parentNode.insertBefore(script, js);
+    }
+  </script>
+
+</body>
+</html>
